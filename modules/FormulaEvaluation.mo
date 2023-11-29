@@ -1,5 +1,4 @@
 //MADE BY JACK ANTON - (ItsJackAnton in Twitter, Distrik and Discover)
-
 //This was possible as I took a c# version as reference from the link below
 //https://stackoverflow.com/questions/21750824/how-to-convert-a-string-to-a-mathematical-expression-programmatically
 
@@ -13,10 +12,9 @@ import Result "mo:base/Result";
 import Deque "mo:base/Deque";
 import Option "mo:base/Option";
 
-
 module FormulaEvaluation {
-    let specialTokens = "()^*/%+-";
-    let operators = ["-", "+", "%", "/", "*", "^"];
+    let specialTokens = "()^*/%+-<>";
+    let operators = ["-", "+", "%", "/", "*", "^", "<", ">"];
 
     public func evaluate(formula : Text) : (Result.Result<Float, Text>) {
 
@@ -223,13 +221,15 @@ module FormulaEvaluation {
 
             var opResult = 0.0;
             switch(op)
-            {
+            {   
                 case("-") opResult := arg1 - arg2;
                 case("+") opResult := arg1 + arg2;
                 case("%") opResult := arg1 % arg2;
                 case("/") opResult := arg1 / arg2;
                 case("*") opResult := arg1 * arg2;
                 case("^") opResult := Float.pow(arg1, arg2);
+                case("<") opResult := Float.min(arg1, arg2);
+                case(">") opResult := Float.max(arg1, arg2);
                 case _ return #err "Operator mismatch";
             };
             
